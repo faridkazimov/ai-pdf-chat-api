@@ -1,0 +1,23 @@
+services:
+  api:
+    build: .
+    container_name: ai-pdf-chat-api
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    depends_on:
+      - qdrant
+
+  qdrant:
+    image: qdrant/qdrant
+    container_name: qdrant-db
+    ports:
+      - "6333:6333"
+    volumes:
+      - qdrant_data:/qdrant/storage
+
+volumes:
+  qdrant_data:
